@@ -1,6 +1,6 @@
 import GithubProvider from "next-auth/providers/github"
 import {env} from "./env";
-import {AuthOptions} from "next-auth";
+import {AuthOptions, getServerSession} from "next-auth";
 import {PrismaAdapter} from "@next-auth/prisma-adapter";
 import {prisma} from "./prisma";
 
@@ -11,7 +11,27 @@ export const authOptions : AuthOptions= {
         GithubProvider({
             clientId: env.GITHUB_ID,
             clientSecret: env.GITHUB_SECRET,
+            profile(profile) {
+                return {
+                    id: profile.id.toString(),
+                    username: profile.login,
+                    name: profile.name,
+                    email: profile.email,
+                    image: profile.avatar_url,
+                }
+            },
         }),
         // ...add more providers here
     ],
+    callbacks: {
+        session({session, user}) {
+            if (!session?.user) return session;
+            session.user.id = user.id;
+            return session;
+        }
+    }
 };
+
+export async function getAuthSession() {
+    return await getServerSession(authOptions);
+}

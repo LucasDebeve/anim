@@ -2,8 +2,13 @@ import {Button, buttonVariants} from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {ThemeToggle} from "@/src/theme/ThemeToggle";
 import Link from "next/link";
+import {LoginButton} from "@/src/feature/layout/auth/LoginButton";
+import {getAuthSession} from "@/lib/auth";
+import {UserProfile} from "@/src/feature/layout/auth/UserProfile";
 
-export const Header = () => {
+export const Header = async () => {
+    const session = await getAuthSession();
+
     return (
         <header className="border-b border-b-accent">
             <div className="container flex items-center py-2 m-auto gap-1">
@@ -17,10 +22,7 @@ export const Header = () => {
                     })}>Organisme</Link>
                 </nav>
                 <ThemeToggle />
-                <Avatar>
-                    <AvatarImage src="https://avatars.dicebear.com" alt="Avatar" />
-                    <AvatarFallback>SC</AvatarFallback>
-                </Avatar>
+                {session?.user ? <UserProfile /> : <LoginButton />}
             </div>
         </header>
     );
