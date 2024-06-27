@@ -1,6 +1,7 @@
-import {Button} from "@/components/ui/button";
+import {Button, buttonVariants} from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {ThemeToggle} from "@/src/theme/ThemeToggle";
+import Link from "next/link";
 
 export const Header = () => {
     return (
@@ -8,8 +9,12 @@ export const Header = () => {
             <div className="container flex items-center py-2 m-auto gap-1">
                 <h2 className="text-2xl font-bold pr-8">Anim</h2>
                 <nav className="flex gap-4 mr-auto">
-                    <a href="#" className="text-accent-foreground font-semibold hover:font-bold">Offres d'emploi</a>
-                    <a href="#" className="text-accent-foreground font-semibold hover:font-bold">Organisme</a>
+                    <Link href="/" className={buttonVariants({
+                        variant: "ghost",
+                    })}>Offres d'emploi</Link>
+                    <Link href="/organisme" className={buttonVariants({
+                        variant: "ghost",
+                    })}>Organisme</Link>
                 </nav>
                 <ThemeToggle />
                 <Avatar>
