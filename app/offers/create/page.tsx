@@ -15,8 +15,6 @@ export default async function CreateOffer() {
 
     const organizations = await getAllOrganizations();
 
-    console.log(organizations)
-
     return (
         <CreateForm user={user} onSubmit={createOfferAction} allContracts={(
             contracts ? contracts.map((contract: any) => (

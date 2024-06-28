@@ -35,6 +35,7 @@ import {Command, CommandEmpty, CommandInput, CommandGroup, CommandItem} from "@/
 import {ChevronUp, CheckIcon} from "lucide-react";
 import Link from "next/link";
 import {Slider} from "@/components/ui/slider";
+import {AutoComplete} from "@/src/feature/autocomplete";
 
 const Schema = z.object({
     description: z.string({
@@ -78,6 +79,11 @@ const Schema = z.object({
     }).refine(
         (data) => data > 0 && data <= 18, "L'âge maximum doit être entre 1 et 18 ans"
     ),
+    city: z.string().optional(),
+    zip: z.string().optional(),
+    country: z.string({
+        required_error: "Veuillez saisir un pays",
+    }).min(1),
 }).superRefine((data, context) => {
     if (data.age_min > data.age_max) {
         context.addIssue({
@@ -117,6 +123,7 @@ export function CreateForm({user, onSubmit, allContracts, allTypes, allOrganizat
       }}>
           <FormField control={form.control} name="title" render={({field}) => (
               <FormItem>
+                  <FormLabel htmlFor="contract">Titre de l'offre<span className="text-red-600">*</span></FormLabel>
                   <Input {...field} id="title" placeholder="Titre de l'offre"/>
                   <FormMessage />
               </FormItem>
@@ -124,7 +131,7 @@ export function CreateForm({user, onSubmit, allContracts, allTypes, allOrganizat
 
           <FormField control={form.control} name="offerType" render={({field}) => (
               <FormItem className="flex-1">
-                  <FormLabel htmlFor="contract">Type d&apos;offre</FormLabel>
+                  <FormLabel htmlFor="contract">Type d&apos;offre<span className="text-red-600">*</span></FormLabel>
                   <Select {...field} onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
                           <SelectTrigger>
@@ -142,7 +149,7 @@ export function CreateForm({user, onSubmit, allContracts, allTypes, allOrganizat
           <div className="flex gap-5 w-full">
               <FormField control={form.control} name="contract" render={({field}) => (
                   <FormItem className="flex-1">
-                      <FormLabel htmlFor="contract">Type de contrat</FormLabel>
+                      <FormLabel htmlFor="contract">Type de contrat<span className="text-red-600">*</span></FormLabel>
                       <Select {...field} onValueChange={field.onChange} defaultValue={field.value}>
                           <FormControl>
                               <SelectTrigger>
@@ -171,7 +178,8 @@ export function CreateForm({user, onSubmit, allContracts, allTypes, allOrganizat
               <FormField control={form.control} name="dateRange" render={({field}) => {
                   return (
                       <FormItem className="flex-1">
-                          <FormLabel htmlFor="dateRange">Période de travail</FormLabel>
+                          <FormLabel htmlFor="dateRange">Période de travail<span
+                              className="text-red-600">*</span></FormLabel>
                           <FormControl>
                               <Popover>
                                   <PopoverTrigger asChild>
@@ -228,9 +236,9 @@ export function CreateForm({user, onSubmit, allContracts, allTypes, allOrganizat
                   name="organization"
                   render={({ field }) => (
                       <FormItem className="flex-1">
-                          <FormLabel className="mt-auto">Organisme</FormLabel>
-                            <Select
-                                {...field}
+                          <FormLabel className="mt-auto">Organisme<span className="text-red-600">*</span></FormLabel>
+                          <Select
+                              {...field}
                                 onValueChange={field.onChange}
                                 defaultValue={field.value}
                             >
@@ -258,7 +266,7 @@ export function CreateForm({user, onSubmit, allContracts, allTypes, allOrganizat
 
           <FormField control={form.control} name="age_min" defaultValue={1} render={({field}) => (
                 <FormItem>
-                    <FormLabel htmlFor="description">Age minimum : {field.value ?? ""} {field.value ? (field.value > 1 ? "ans" : "an") : ""}</FormLabel>
+                    <FormLabel htmlFor="description">Age minimum <span className="text-red-600">*</span> ({field.value ?? ""} {field.value ? (field.value > 1 ? "ans" : "an") : ""})</FormLabel>
                     <Slider defaultValue={field.value ?? 1} max={18} min={1} step={1} {...field} onValueChange={(vals) => {
                         field.onChange(vals)
                     }} value={[form.getValues("age_min") ?? 1]} />
@@ -268,7 +276,7 @@ export function CreateForm({user, onSubmit, allContracts, allTypes, allOrganizat
 
           <FormField control={form.control} name="age_max" defaultValue={18} render={({field}) => (
               <FormItem>
-                  <FormLabel htmlFor="description">Age maximum : {field.value ?? ""} {field.value ? (field.value > 1 ? "ans" : "an") : ""}</FormLabel>
+                  <FormLabel htmlFor="description">Age maximum <span className="text-red-600">*</span> ({field.value ?? ""} {field.value ? (field.value > 1 ? "ans" : "an") : ""})</FormLabel>
                   <Slider defaultValue={field.value ?? 18} max={18} min={1} step={1} {...field} onValueChange={(vals) => {
                       field.onChange(vals)
                   }} value={[form.getValues("age_max") ?? 18]} />
@@ -276,18 +284,45 @@ export function CreateForm({user, onSubmit, allContracts, allTypes, allOrganizat
               </FormItem>
           )} />
 
+          <div className="flex gap-5 w-full">
+              <FormField control={form.control} name="city" render={({field}) => (
+                  <FormItem className="flex-1">
+                      <FormLabel htmlFor="city">Ville</FormLabel>
+                      <Input {...field} id="city" placeholder="Ville" />
+                      <FormMessage />
+                  </FormItem>
+              )} />
+
+              <FormField control={form.control} name="zip" render={({field}) => (
+                  <FormItem className="flex-1">
+                      <FormLabel htmlFor="zip">Code postal</FormLabel>
+                      <Input {...field} id="zip" placeholder="Code Postal" />
+                      <FormMessage />
+                  </FormItem>
+              )} />
+
+              <FormField control={form.control} name="country" render={({field}) => (
+                  <FormItem className="flex-1">
+                      <FormLabel htmlFor="country">Code postal<span className="text-red-600">*</span></FormLabel>
+                      <Input {...field} id="country" placeholder="Pays" />
+                      <FormMessage />
+                  </FormItem>
+              )} />
+          </div>
+
           <FormField control={form.control} name="description" render={({field}) => (
               <FormItem>
-                  <FormLabel htmlFor="description">Description</FormLabel>
+                  <FormLabel htmlFor="description">Description<span className="text-red-600">*</span></FormLabel>
                   <ContentTextArea className="text-sm" id="description" {...field} placeholder="Veuillez taper une la description de votre offre" />
                   <FormMessage />
               </FormItem>
           )} />
 
-          <div className="flex w-full justify-end">
-            <Button size="sm" type="submit">
-                Publier
-            </Button>
+          <div className="flex w-full justify-between items-center">
+              <p className="text-muted-foreground text-sm">Les champs marqués d&apos;un <span className="text-red-600">*</span> sont obligatoires</p>
+              <Button type="submit">
+                  Publier
+              </Button>
           </div>
       </Form>
     </OfferLayout>
