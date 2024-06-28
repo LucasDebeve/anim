@@ -40,12 +40,12 @@ export async function createOfferAction(values: CreateFormValues) {
             beginAt: values.dateRange.from,
             endAt: values.dateRange.to,
             offerTypeId: values.offerType,
-            age_min: 0,
-            age_max: 0,
+            age_min: values.age_min || 0,
+            age_max: values.age_max || 18,
             city: "",
             postal_code: "",
             country: "",
-            organizationId: "0",
+            organizationId: values.organization,
             interAccepted: false,
         }
     });

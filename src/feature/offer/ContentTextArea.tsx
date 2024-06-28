@@ -25,7 +25,7 @@ export const ContentTextArea = forwardRef<
                 onChange?.(e);
             }}
             rows={rows}
-            className={clsx(className, 'resize-none w-full bg-transparent outline-none')}
+            className={clsx(className, 'px-2 resize-none w-full bg-transparent outline-none')}
             {...props}
         />
     );

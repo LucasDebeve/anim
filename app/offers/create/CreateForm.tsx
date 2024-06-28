@@ -33,17 +33,31 @@ import {DatePickerWithRange} from "@/src/feature/offer/DatePicker";
 import {useState} from "react";
 import {Command, CommandEmpty, CommandInput, CommandGroup, CommandItem} from "@/components/ui/command";
 import {ChevronUp, CheckIcon} from "lucide-react";
+import Link from "next/link";
+import {Slider} from "@/components/ui/slider";
 
 const Schema = z.object({
-    description: z.string().min(1).max(500),
-    title: z.string().min(1).max(100),
-    remuneration: z.coerce.number().min(0),
+    description: z.string({
+        required_error: "Veuillez saisir une description",
+    }).min(1).max(500),
+    title: z.string({
+        required_error: "Veuillez saisir un titre",
+    }).min(1).max(100),
+    remuneration: z.coerce.number({
+        required_error: "Veuillez saisir une rémunération",
+    }).min(0),
     contract: z.string({
         required_error: "Veuillez sélectionner un type de contrat",
     }),
     dateRange: z.object({
-        from: z.date(),
-        to: z.date(),
+        from: z.date({
+            required_error: "Veuillez sélectionner une date de début",
+        }),
+        to: z.date({
+            required_error: "Veuillez sélectionner une date de fin",
+        }),
+    }, {
+        required_error: "Veuillez sélectionner une période de travail",
     }).refine(
         (data) => data.from < data.to, "La date de fin doit être supérieure à la date de début"
     ),
@@ -53,6 +67,25 @@ const Schema = z.object({
     organization: z.string({
         required_error: "Veuillez sélectionner un organisme",
     }),
+    age_min: z.coerce.number( {
+        required_error: "Veuillez sélectionner un âge minimum",
+    }).refine(
+        (data) => data > 0 && data <= 18, "L'âge maximum doit être entre 1 et 18 ans"
+    ),
+    // Verify age_max is upper than age_min
+    age_max: z.coerce.number( {
+        required_error: "Veuillez sélectionner un âge maximum",
+    }).refine(
+        (data) => data > 0 && data <= 18, "L'âge maximum doit être entre 1 et 18 ans"
+    ),
+}).superRefine((data, context) => {
+    if (data.age_min > data.age_max) {
+        context.addIssue({
+            code: z.ZodIssueCode.custom,
+            path: ["age_max"],
+            message: "L'âge maximum doit être supérieur à l'âge minimum",
+        });
+    }
 });
 
 export type CreateFormValues = z.infer<typeof Schema>;
@@ -194,8 +227,8 @@ export function CreateForm({user, onSubmit, allContracts, allTypes, allOrganizat
                   control={form.control}
                   name="organization"
                   render={({ field }) => (
-                      <FormItem className="flex flex-col">
-                          <FormLabel>Organisme</FormLabel>
+                      <FormItem className="flex-1">
+                          <FormLabel className="mt-auto">Organisme</FormLabel>
                             <Select
                                 {...field}
                                 onValueChange={field.onChange}
@@ -214,15 +247,39 @@ export function CreateForm({user, onSubmit, allContracts, allTypes, allOrganizat
                                         ))}
                                 </SelectContent>
                             </Select>
+                            <FormMessage />
+                            <p className="text-sm text-muted-foreground mt-1">
+                                Si l'organisme n'est pas dans la liste, veuillez le créer <Link href={`/organizations/create`} className={"underline"}>ici</Link>.
+                            </p>
                       </FormItem>
                   )}
               />
           </div>
 
+          <FormField control={form.control} name="age_min" defaultValue={1} render={({field}) => (
+                <FormItem>
+                    <FormLabel htmlFor="description">Age minimum : {field.value ?? ""} {field.value ? (field.value > 1 ? "ans" : "an") : ""}</FormLabel>
+                    <Slider defaultValue={field.value ?? 1} max={18} min={1} step={1} {...field} onValueChange={(vals) => {
+                        field.onChange(vals)
+                    }} value={[form.getValues("age_min") ?? 1]} />
+                    <FormMessage />
+                </FormItem>
+            )} />
+
+          <FormField control={form.control} name="age_max" defaultValue={18} render={({field}) => (
+              <FormItem>
+                  <FormLabel htmlFor="description">Age maximum : {field.value ?? ""} {field.value ? (field.value > 1 ? "ans" : "an") : ""}</FormLabel>
+                  <Slider defaultValue={field.value ?? 18} max={18} min={1} step={1} {...field} onValueChange={(vals) => {
+                      field.onChange(vals)
+                  }} value={[form.getValues("age_max") ?? 18]} />
+                  <FormMessage />
+              </FormItem>
+          )} />
+
           <FormField control={form.control} name="description" render={({field}) => (
               <FormItem>
                   <FormLabel htmlFor="description">Description</FormLabel>
-                  <ContentTextArea className="text-sm" id="description" {...field} placeholder="Hello" />
+                  <ContentTextArea className="text-sm" id="description" {...field} placeholder="Veuillez taper une la description de votre offre" />
                   <FormMessage />
               </FormItem>
           )} />
