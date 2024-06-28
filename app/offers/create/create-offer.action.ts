@@ -42,11 +42,11 @@ export async function createOfferAction(values: CreateFormValues) {
             offerTypeId: values.offerType,
             age_min: values.age_min || 0,
             age_max: values.age_max || 18,
-            city: values.city,
-            postal_code: values.zip,
-            country: "",
+            city: values.city || "",
+            postal_code: values.zip || "",
+            country: values.country,
             organizationId: values.organization,
-            interAccepted: false,
+            interAccepted: values.intern || false,
         }
     });
 

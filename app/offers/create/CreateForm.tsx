@@ -36,6 +36,7 @@ import {ChevronUp, CheckIcon} from "lucide-react";
 import Link from "next/link";
 import {Slider} from "@/components/ui/slider";
 import {AutoComplete} from "@/src/feature/autocomplete";
+import {Checkbox} from "@/components/ui/checkbox";
 
 const Schema = z.object({
     description: z.string({
@@ -84,6 +85,7 @@ const Schema = z.object({
     country: z.string({
         required_error: "Veuillez saisir un pays",
     }).min(1),
+    intern: z.boolean().default(false).optional(),
 }).superRefine((data, context) => {
     if (data.age_min > data.age_max) {
         context.addIssue({
@@ -310,6 +312,23 @@ export function CreateForm({user, onSubmit, allContracts, allTypes, allOrganizat
               )} />
           </div>
 
+          <FormField control={form.control} name="intern" render={({field}) => (
+              <FormItem className="mt-3">
+                  <div className="flex items-center space-x-2">
+                      <FormControl>
+                          <Checkbox id="intern" checked={field.value} onCheckedChange={field.onChange}/>
+                      </FormControl>
+                      <FormLabel
+                          htmlFor="intern"
+                          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                      >
+                          Accepter les candidatures de stagiaires
+                      </FormLabel>
+                  </div>
+                  <FormMessage/>
+              </FormItem>
+          )}/>
+
           <FormField control={form.control} name="description" render={({field}) => (
               <FormItem>
                   <FormLabel htmlFor="description">Description<span className="text-red-600">*</span></FormLabel>
@@ -318,13 +337,16 @@ export function CreateForm({user, onSubmit, allContracts, allTypes, allOrganizat
               </FormItem>
           )} />
 
+          <hr/>
+
           <div className="flex w-full justify-between items-center">
-              <p className="text-muted-foreground text-sm">Les champs marqués d&apos;un <span className="text-red-600">*</span> sont obligatoires</p>
+              <p className="text-muted-foreground text-sm">Les champs marqués d&apos;un <span
+                  className="text-red-600">*</span> sont obligatoires</p>
               <Button type="submit">
                   Publier
               </Button>
           </div>
       </Form>
     </OfferLayout>
-  );
+    );
 }
