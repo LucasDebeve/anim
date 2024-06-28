@@ -37,3 +37,6 @@ next-env.d.ts
 
 # Environment variables
 .env
+
+# Databse
+prisma/*.db
