@@ -104,9 +104,10 @@ type CreateFormProps = {
     allContracts: any;
     allTypes: any;
     allOrganization: any;
+    isCard?: boolean;
 };
 
-export function CreateForm({user, onSubmit, allContracts, allTypes, allOrganization}: CreateFormProps) {
+export function CreateForm({user, onSubmit, allContracts, allTypes, allOrganization, isCard = false}: CreateFormProps) {
     const form = useZodForm({
         schema: Schema,
     });
@@ -115,8 +116,9 @@ export function CreateForm({user, onSubmit, allContracts, allTypes, allOrganizat
 
     console.log(allOrganization)
 
+    // @ts-ignore
     return (
-    <OfferLayout user={user}>
+    <OfferLayout user={user} className={isCard ? "" : "border-none shadow-none"} hasHeart={false}>
       <Form className="flex flex-col gap-3" form={form} onSubmit={async (values) => {
           console.log(values);
           const result = await onSubmit(values);
