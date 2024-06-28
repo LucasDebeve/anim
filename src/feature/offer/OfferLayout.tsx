@@ -6,6 +6,7 @@ import Link from "next/link";
 import {formatDate} from "@/lib/date";
 import {Heart} from "lucide-react";
 import {Button} from "@/components/ui/button";
+import {Card} from "@/components/ui/card";
 
 type OfferLayoutProps = PropsWithChildren<{
     user: OfferHome["user"],
@@ -16,7 +17,7 @@ type OfferLayoutProps = PropsWithChildren<{
 
 export function OfferLayout({className, user, offerId, createdAt, children}: OfferLayoutProps) {
     return (
-        <div className={clsx("flex w-full flex-row items-start p-4 border border-accent rounded-lg shadow shadow-accent dark:shadow-none", className)}>
+        <Card className={clsx("flex w-full flex-row items-start p-4", className)}>
             <Avatar>
                 {user.image ? <AvatarImage src={user.image} alt={user.name}/> : null}
                 <AvatarFallback>
@@ -40,6 +41,6 @@ export function OfferLayout({className, user, offerId, createdAt, children}: Off
             <Button size="icon" variant="ghost">
                 <Heart size={20} />
             </Button>
-        </div>
+        </Card>
     );
 }

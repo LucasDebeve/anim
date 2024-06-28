@@ -24,7 +24,7 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem={true}>
           <div className="flex flex-col h-full">
             <Header />
-            <div className="flex-1 max-w-5xl container m-auto py-16 w-full">{children}</div>
+            <div className="flex-1 max-w-5xl container m-auto py-20 w-full">{children}</div>
             <Footer />
           </div>
         </ThemeProvider>
