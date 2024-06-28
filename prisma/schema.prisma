@@ -76,6 +76,7 @@ model User {
   organizations Organization[] @relation("own")
   offers Offer[] @relation("publish")
   comments Comment[] @relation("comments")
+  likes Like[] @relation("likes")
 }
 
 model Contract {
@@ -156,6 +157,7 @@ model Offer {
   organization Organization @relation("offer", fields: [organizationId], references: [id])
   offerType OfferType @relation("type", fields: [offerTypeId], references: [id])
   comments Comment[] @relation("commented")
+  likes Like[] @relation("liked")
 }
 
 model Comment {
@@ -170,4 +172,15 @@ model Comment {
   offer Offer @relation("commented", fields: [offerId], references: [id])
   parent Comment? @relation("reply", fields: [parentId], references: [id])
   replies Comment[] @relation("reply")
+}
+
+model Like {
+  id                    String     @id @default(uuid())
+  userId                String
+  offerId               String
+  createdAt             DateTime   @default(now())
+
+  user User @relation("likes", fields: [userId], references: [id])
+  offer Offer @relation("liked", fields: [offerId], references: [id])
+  @@unique([userId, offerId])
 }

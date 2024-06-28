@@ -4,6 +4,8 @@ import {clsx} from "clsx";
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 import Link from "next/link";
 import {formatDate} from "@/lib/date";
+import {Heart} from "lucide-react";
+import {Button} from "@/components/ui/button";
 
 type OfferLayoutProps = PropsWithChildren<{
     user: OfferHome["user"],
@@ -14,7 +16,7 @@ type OfferLayoutProps = PropsWithChildren<{
 
 export function OfferLayout({className, user, offerId, createdAt, children}: OfferLayoutProps) {
     return (
-        <div className={clsx("flex w-full flex-row items-start p-4 border", className)}>
+        <div className={clsx("flex w-full flex-row items-start p-4 border border-accent rounded-lg shadow shadow-accent dark:shadow-none", className)}>
             <Avatar>
                 {user.image ? <AvatarImage src={user.image} alt={user.name}/> : null}
                 <AvatarFallback>
@@ -24,17 +26,20 @@ export function OfferLayout({className, user, offerId, createdAt, children}: Off
             </Avatar>
             <div className="ml-4 flex w-full flex-col gap-2">
                 <Link href={`/users/${user.id}`}>
-                    <div className="flex flex-row items-center gap-2">
-                        <p className="text-sm text-card-foreground mr-auto">{user.name}</p>
+                    <div className="flex flex-col gap-1">
+                        <p className="text-sm font-semibold text-muted-foreground">{user.name}</p>
                         {createdAt ? (
-                            <p className="text-sm text-muted-foreground">
-                                il y a {formatDate(createdAt)}
+                            <p className="text-xs font-light text-muted-foreground">
+                                {formatDate(createdAt)}
                             </p>
                         ) : null}
                     </div>
                 </Link>
                 {children}
             </div>
+            <Button size="icon" variant="ghost">
+                <Heart size={20} />
+            </Button>
         </div>
     );
 }

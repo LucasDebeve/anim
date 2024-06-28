@@ -60,8 +60,6 @@ const main = async () => {
 
     const organizations = [];
 
-    console.log(users);
-
     for (let i = 0; i < 10; i++) {
         const organization = {
             name: faker.company.name(),
@@ -86,7 +84,7 @@ const main = async () => {
         const offer = {
             title: faker.lorem.sentence(),
             description: faker.lorem.paragraph(),
-            remuneration: faker.number.float({min: 0, max: 1000}),
+            remuneration: faker.number.float({min: 10, max: 40}),
             userId: users[faker.number.int({min: 0, max: users.length - 1})].id,
             organizationId: organizations[faker.number.int({min: 0, max: organizations.length - 1})].id,
             contractId: contractsDB[faker.number.int({min: 0, max: contracts.length - 1})].id,
@@ -104,6 +102,29 @@ const main = async () => {
         const o = await prisma.offer.create({data: offer});
 
         offers.push(o);
+    }
+
+    const likes = [];
+    const tmpLikes: Prisma.LikeUncheckedCreateInput[] = [];
+
+    for (let i = 0; i < 50; i++) {
+        const userId = users[faker.number.int({min: 0, max: users.length - 1})].id;
+        const offerId = offers[faker.number.int({min: 0, max: offers.length - 1})].id;
+
+        const like = {
+            userId,
+            offerId,
+        } as Prisma.LikeUncheckedCreateInput;
+
+        if (tmpLikes.find(l => l.userId === userId && l.offerId === offerId)) {
+            continue;
+        }
+
+        tmpLikes.push(like);
+
+        const l = await prisma.like.create({data: like});
+
+        likes.push(l);
     }
 };
 

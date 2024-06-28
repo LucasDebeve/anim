@@ -10,6 +10,7 @@ export const getLatestOffers = (userId?:string) => prisma.offer.findMany({
         id: true,
         title: true,
         description: true,
+        remuneration: true,
         age_min: true,
         age_max: true,
         beginAt: true,
@@ -50,6 +51,20 @@ export const getLatestOffers = (userId?:string) => prisma.offer.findMany({
             }
         },
         createdAt: true,
+        _count: {
+            select: {
+                likes: true,
+                comments: true,
+            }
+        },
+        likes: {
+            select: {
+                userId: true,
+            },
+            where: {
+                userId: userId ?? 'error',
+            }
+        },
     }
 });
 

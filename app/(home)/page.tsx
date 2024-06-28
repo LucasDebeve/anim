@@ -10,7 +10,7 @@ export default async function Home() {
     const offers = await getLatestOffers()
 
     return (
-        <div>
+        <div className="flex flex-col gap-3">
             {offers.map((offer, index) => {
                return (
                    <Offer offer={offer} key={offer.id} />

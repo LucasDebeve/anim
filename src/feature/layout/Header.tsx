@@ -10,7 +10,7 @@ export const Header = async () => {
     const session = await getAuthSession();
 
     return (
-        <header className="border-b border-b-accent">
+        <header className="border-b border-b-accent z-40 fixed top-0 left-0 bg-background w-full">
             <div className="container flex items-center py-2 m-auto gap-1">
                 <h2 className="text-2xl font-bold pr-8">Anim</h2>
                 <nav className="flex gap-4 mr-auto">
