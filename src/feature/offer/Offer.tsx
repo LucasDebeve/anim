@@ -23,6 +23,9 @@ export function Offer({offer}: OfferProps) {
             <div>
                 <Link href={`/offers/${offer.id}`}
                       className="text-sm">{offer._count.likes} {offer._count.likes === 1 ? "like" : "likes"}</Link>
+                <span className="mx-2">-</span>
+                <Link href={`/offers/${offer.id}`}
+                      className="text-sm">{offer._count.comments} {offer._count.comments === 1 ? "commentaire" : "commentaires"}</Link>
             </div>
         </OfferLayout>
     );

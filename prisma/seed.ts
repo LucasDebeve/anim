@@ -1,5 +1,6 @@
 import {Prisma, PrismaClient} from "@prisma/client";
 import {faker} from "@faker-js/faker";
+import {randomInt} from "node:crypto";
 
 const prisma = new PrismaClient();
 
@@ -125,6 +126,30 @@ const main = async () => {
         const l = await prisma.like.create({data: like});
 
         likes.push(l);
+    }
+
+    const comments = [];
+
+    for (let i = 0; i < 80; i++) {
+        const userId = users[faker.number.int({min: 0, max: users.length - 1})].id;
+        const offerId = offers[faker.number.int({min: 0, max: offers.length - 1})].id;
+
+        // Get a random comment with the same offerId
+        let parentComment = null;
+        if (randomInt(0, 2) === 0) {
+            parentComment = comments.find(c => c.offerId === offerId);
+        }
+
+        const comment = {
+            userId,
+            offerId,
+            content: faker.lorem.paragraph(),
+            parentId: parentComment ? parentComment.id : null,
+        } as Prisma.CommentUncheckedCreateInput;
+
+        const c = await prisma.comment.create({data: comment});
+
+        comments.push(c);
     }
 };
 
