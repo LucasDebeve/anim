@@ -16,7 +16,7 @@ type OfferLayoutProps = PropsWithChildren<{
     hasHeart?: boolean,
 }>;
 
-export function OfferLayout({className, user, offerId, createdAt, children, hasHeart = true}: OfferLayoutProps) {
+export function OfferLayout({className, user, createdAt, children, hasHeart = true}: OfferLayoutProps) {
     return (
         <Card className={clsx("flex w-full flex-row items-start p-4", className)}>
             <Avatar>
