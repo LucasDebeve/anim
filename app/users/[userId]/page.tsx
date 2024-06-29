@@ -9,13 +9,11 @@ export default async function Page({params} : {
     }
 }) {
     const session = await getAuthSession();
-    const user = await GetUserProfile(params.userId);
+    const user = await GetUserProfile(params.userId, session?.user.id);
 
     if (!user) {
         return notFound();
     }
-
-    await new Promise((resolve) => setTimeout(resolve, 2000));
 
     return (
         <Profile user={user} canEdit={session?.user.id === user.id}/>

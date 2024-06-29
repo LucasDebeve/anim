@@ -60,9 +60,7 @@ export function CreateCommentForm({user, offer, onSubmit}: CreateCommentFormProp
 
     return (
         <Form className="flex flex-col gap-3" form={form} onSubmit={async (values) => {
-            console.log(values);
             const result = await onSubmit(values);
-            console.log("Submit client side", result);
             router.push(`/offers/${offer.id}`);
             router.refresh();
         }}>

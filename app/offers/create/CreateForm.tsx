@@ -114,15 +114,11 @@ export function CreateForm({user, onSubmit, allContracts, allTypes, allOrganizat
 
     const router = useRouter();
 
-    console.log(allOrganization)
-
     // @ts-ignore
     return (
     <OfferLayout user={user} className={isCard ? "" : "border-none shadow-none"} hasHeart={false}>
       <Form className="flex flex-col gap-3" form={form} onSubmit={async (values) => {
-          console.log(values);
           const result = await onSubmit(values);
-          console.log("Submit client side", result);
           router.push(`/offers/${result}`);
           router.refresh();
       }}>
@@ -221,7 +217,6 @@ export function CreateForm({user, onSubmit, allContracts, allTypes, allOrganizat
                                                   from: date?.from,
                                                   to: date?.to,
                                               });
-                                              console.log("date", date);
                                           }}
                                           numberOfMonths={2}
                                           locale={fr}

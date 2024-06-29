@@ -8,8 +8,6 @@ import {createOfferAction} from "@/app/offers/create/create-offer.action";
 export default async function Page() {
     const user = await getUser();
 
-    console.log("Modal create");
-
     const contracts = await getAllContracts();
 
     const types = await getAllTypes();

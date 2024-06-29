@@ -6,7 +6,6 @@ import {prisma} from "@/lib/prisma";
 
 export async function createOfferAction(values: CreateFormValues) {
     // Create offer
-    console.log("I'm on the server!");
     const user = await getUser();
     const offer = await prisma.offer.create({
         data: {

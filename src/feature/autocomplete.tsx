@@ -19,8 +19,6 @@ export function AutoComplete() {
     const [value, setValue] = useState("")
     const [city, zip] = value.split("_") || ["", ""]
 
-    console.log(list, value)
-
     useEffect(() => {
         const inputZip = document.getElementById("zip") as HTMLInputElement;
         inputZip.value = zip;

@@ -27,7 +27,7 @@ export const getUser = async () => {
     });
 };
 
-export const GetUserProfile = async (userId: string) => {
+export const GetUserProfile = async (userId: string, connectedUserId?: string) => {
     return prisma.user.findFirst({
         where: {
             OR: [
@@ -49,7 +49,7 @@ export const GetUserProfile = async (userId: string) => {
                 }
             },
             offers: {
-                select: offerSelectQuery(userId),
+                select: offerSelectQuery(connectedUserId ?? userId),
                 take: 10,
                 orderBy: {
                     createdAt: "desc"

@@ -17,7 +17,6 @@ export function LikeButton({offerId, isLiked, countLike} : {
 
     return (
         <Button className={clsx("flex items-center justify-start gap-1 min-w-[5rem]")} variant="ghost" onClick={() => {
-            console.log("Like button clicked", isLiked ? "unlike" : "like");
             startTransition(() => likeAction(offerId))
         }}>
             {isPending ? <Loader size={16} /> : (isLiked ? <Heart size={16} fill={"#EC2756"} stroke={"#EC2756"} /> : <Heart size={16} />)}
