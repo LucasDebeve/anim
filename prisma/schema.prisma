@@ -170,8 +170,8 @@ model Comment {
 
   user User @relation("comments", fields: [userId], references: [id])
   offer Offer @relation("commented", fields: [offerId], references: [id])
-  parent Comment? @relation("reply", fields: [parentId], references: [id])
-  replies Comment[] @relation("reply")
+  parent Comment? @relation("comment", fields: [parentId], references: [id])
+  replies Comment[] @relation("comment")
 }
 
 model Like {

@@ -4,9 +4,10 @@ import {notFound} from "next/navigation";
 import {OfferDetails} from "@/src/feature/offer/offerDetails";
 import {Card} from "@/components/ui/card";
 import {OfferLayout} from "@/src/feature/offer/OfferLayout";
-import {Reply} from "lucide-react";
+import {Heart, MessageCircle, Reply} from "lucide-react";
 import {Button, buttonVariants} from "@/components/ui/button";
 import Link from "next/link";
+import {Comment} from "postcss";
 
 export default async function OfferView({
     params,
@@ -34,15 +35,29 @@ export default async function OfferView({
                 <h1 className="text-2xl font-bold">{offer.title}</h1>
                 <p>{offer.description}</p>
                 <OfferDetails offer={offer}/>
+                <div className="flex gap-3">
+                    <Link href={`/offers/${offer.id}/comment/`} className={buttonVariants({
+                        size: "icon",
+                        variant: "ghost",
+                    })}>
+                        <MessageCircle size={20}/>
+                    </Link>
+                    <Link href={`/offers/${offer.id}/like/`} className={buttonVariants({
+                        size: "icon",
+                        variant: "ghost",
+                    })}>
+                        <Heart size={20}/>
+                    </Link>
+                </div>
                 <p>{offer._count.comments} commentaires</p>
                 <div className="flex-1 flex flex-col gap-4">
                     {offer.comments.map((comment) => {
                         if (!comment.parent) {
                             return (
-                                <OfferLayout user={comment.user} createdAt={comment.createdAt} hasHeart={false}>
+                                <OfferLayout key={`comment-${comment.id}`} user={comment.user} createdAt={comment.createdAt} hasHeart={false}>
                                     <p>{comment.content}</p>
                                     <div className="flex flex-row justify-end gap-2">
-                                        <Link href={`/offers/${offer.id}/comment/`} className={buttonVariants({
+                                        <Link href={{ pathname: `/offers/${offer.id}/comment`, query: { 'replyTo': comment.id }}} className={buttonVariants({
                                             size: "icon",
                                             variant: "ghost",
                                         })}>
@@ -53,8 +68,14 @@ export default async function OfferView({
                                         {offer.comments.map((reply) => {
                                             if (reply.parent?.id === comment.id) {
                                                 return (
-                                                    <OfferLayout user={reply.user} createdAt={reply.createdAt} hasHeart={false} className="border-none shadow-none">
+                                                    <OfferLayout key={`comment-reply-${comment.id}`} user={reply.user} createdAt={reply.createdAt} hasHeart={false} className="border-none shadow-none">
                                                         <p>{reply.content}</p>
+                                                        <Link href={{ pathname: `/offers/${offer.id}/comment`, query: { 'replyTo': reply.id }}} className={buttonVariants({
+                                                            size: "icon",
+                                                            variant: "ghost",
+                                                        })}>
+                                                            <Reply size={20}/>
+                                                        </Link>
                                                     </OfferLayout>
                                                 );
                                             }

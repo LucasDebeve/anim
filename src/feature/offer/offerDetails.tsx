@@ -5,7 +5,7 @@ export function OfferDetails({offer}: { offer: OfferHome }) {
         <>
             <hr className="mt-2"/>
             <div className="py-2 flex flex-row gap-2 justify-between">
-                <div>
+                <div className="text-sm md:text-base">
                     <p className="font-semibold">
                         Type
                     </p>
@@ -13,7 +13,7 @@ export function OfferDetails({offer}: { offer: OfferHome }) {
                         {offer.offerType.title}
                     </p>
                 </div>
-                <div>
+                <div className="text-sm md:text-base">
                     <p className="font-semibold">
                         Tranche d'âge
                     </p>
@@ -21,7 +21,7 @@ export function OfferDetails({offer}: { offer: OfferHome }) {
                         {offer.age_min} - {offer.age_max} ans
                     </p>
                 </div>
-                <div>
+                <div className="text-sm md:text-base">
                     <p className="font-semibold">
                         Contrat
                     </p>
@@ -29,7 +29,7 @@ export function OfferDetails({offer}: { offer: OfferHome }) {
                         {offer.contract.title}
                     </p>
                 </div>
-                <div>
+                <div className="text-sm md:text-base">
                     <p className="font-semibold">
                         Rémunération
                     </p>

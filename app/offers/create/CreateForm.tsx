@@ -124,6 +124,7 @@ export function CreateForm({user, onSubmit, allContracts, allTypes, allOrganizat
           const result = await onSubmit(values);
           console.log("Submit client side", result);
           router.push(`/offers/${result}`);
+          router.refresh();
       }}>
           <FormField control={form.control} name="title" render={({field}) => (
               <FormItem>

@@ -18,11 +18,12 @@ export default function Derror({
 
     return (
         <Alert>
-            <AlertTriangle className="w-6 h-6 mr-2"/>
-            <AlertTitle>{error.name}</AlertTitle>
-            <AlertDescription>
+            <AlertTriangle className="w-6 h-6"/>
+            <AlertTitle className="ml-3">{error.name}</AlertTitle>
+            <AlertDescription className="ml-3">
                 {error.message}
             </AlertDescription>
+
         </Alert>
     )
 }

@@ -1,10 +1,11 @@
 import {OfferHome} from "@/src/query/offer.query";
 import {OfferLayout} from "@/src/feature/offer/OfferLayout";
 import Link from "next/link";
-import {Button} from "@/components/ui/button";
-import {Heart} from "lucide-react";
+import {Button, buttonVariants} from "@/components/ui/button";
+import {Heart, MessageCircle} from "lucide-react";
 import {round} from "@floating-ui/utils";
 import {OfferDetails} from "@/src/feature/offer/offerDetails";
+import {clsx} from "clsx";
 
 type OfferProps = {
     offer: OfferHome;
@@ -20,12 +21,17 @@ export function Offer({offer}: OfferProps) {
                 {offer.description}
             </p>
             <OfferDetails offer={offer}/>
-            <div>
-                <Link href={`/offers/${offer.id}`}
-                      className="text-sm">{offer._count.likes} {offer._count.likes === 1 ? "like" : "likes"}</Link>
-                <span className="mx-2">-</span>
-                <Link href={`/offers/${offer.id}`}
-                      className="text-sm">{offer._count.comments} {offer._count.comments === 1 ? "commentaire" : "commentaires"}</Link>
+            <div className="flex gap-3">
+                <Button className="flex items-center gap-1">
+                    <Heart size={16}/>
+                    <span>{round(offer._count.likes)}</span>
+                </Button>
+                <Link href={`/offers/${offer.id}/comment`} className={clsx("flex items-center gap-1", buttonVariants({
+                    variant: "outline",
+                }))}>
+                    <MessageCircle size={16}/>
+                    {offer._count.comments}
+                </Link>
             </div>
         </OfferLayout>
     );

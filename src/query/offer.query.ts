@@ -95,4 +95,13 @@ export const getOfferView = (offerId: string, userId?: string) => prisma.offer.f
     }
 });
 
+export const getOffer = (offerId: string, userId?: string) => prisma.offer.findUnique({
+    where: {
+        id: offerId,
+    },
+    select: {
+        ...offerSelectQuery(userId),
+    }
+});
+
 export type OfferHome = Prisma.PromiseReturnType<typeof getLatestOffers>[number];
