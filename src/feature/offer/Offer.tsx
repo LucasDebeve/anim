@@ -6,14 +6,17 @@ import {Heart, MessageCircle} from "lucide-react";
 import {round} from "@floating-ui/utils";
 import {OfferDetails} from "@/src/feature/offer/offerDetails";
 import {clsx} from "clsx";
+import {LikeButton} from "@/src/feature/offer/LikeButton";
 
 type OfferProps = {
     offer: OfferHome;
+    isCard?: boolean;
+    hasHeart?: boolean;
 }
 
-export function Offer({offer}: OfferProps) {
+export function Offer({offer, isCard = true, hasHeart = true}: OfferProps) {
     return (
-        <OfferLayout user={offer.user} offerId={offer.id} createdAt={offer.createdAt}>
+        <OfferLayout user={offer.user} offerId={offer.id} createdAt={offer.createdAt} className={isCard ? "" : "border-none shadow-none"} hasHeart={hasHeart}>
             <Link href={`/offers/${offer.id}`} className="text-foreground font-semibold">
                 {offer.title}
             </Link>
@@ -22,13 +25,10 @@ export function Offer({offer}: OfferProps) {
             </p>
             <OfferDetails offer={offer}/>
             <div className="flex gap-3">
-                <Button className="flex items-center gap-1">
-                    <Heart size={16}/>
-                    <span>{round(offer._count.likes)}</span>
-                </Button>
-                <Link href={`/offers/${offer.id}/comment`} className={clsx("flex items-center gap-1", buttonVariants({
-                    variant: "outline",
-                }))}>
+                <LikeButton offerId={offer.id} isLiked={offer.likes.length > 0} countLike={round(offer._count.likes)}/>
+                <Link href={`/offers/${offer.id}/comment`} className={clsx(buttonVariants({
+                    variant: "ghost",
+                }), "flex items-center !justify-start gap-1 min-w-[5rem]")}>
                     <MessageCircle size={16}/>
                     {offer._count.comments}
                 </Link>

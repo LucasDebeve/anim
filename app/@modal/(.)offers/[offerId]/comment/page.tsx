@@ -13,8 +13,6 @@ export default async function Page({params, searchParams} : {
     const user = await getUser();
     const offer = await getOffer(params.offerId, user.id);
 
-    console.log("Modal create");
-
     if (!offer) {
         return notFound();
     }

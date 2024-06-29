@@ -29,8 +29,6 @@ export function CreateCommentModal({user, offer, createComment}: {
 
     const pathname = usePathname();
 
-    console.log("Modal comment create");
-
     return (
         <Dialog open={pathname?.includes('comment')}
                 onOpenChange={() => {

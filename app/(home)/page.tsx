@@ -11,7 +11,7 @@ import {clsx} from "clsx";
 export default async function Home() {
     const session = await getAuthSession();
 
-    const offers = await getLatestOffers();
+    const offers = await getLatestOffers(session?.user.id);
 
     return (
         <>

@@ -19,7 +19,7 @@ type OfferLayoutProps = PropsWithChildren<{
 export function OfferLayout({className, user, createdAt, children, hasHeart = true}: OfferLayoutProps) {
     return (
         <Card className={clsx("flex w-full flex-row items-start p-4", className)}>
-            <Avatar>
+            <Avatar size="default">
                 {user.image ? <AvatarImage src={user.image} alt={user.name}/> : null}
                 <AvatarFallback>
                     {user.username ? user.username.slice(0, 2).toUpperCase() : user.name.slice(0, 2).toUpperCase()}
