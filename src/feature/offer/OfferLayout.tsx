@@ -4,9 +4,10 @@ import {clsx} from "clsx";
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 import Link from "next/link";
 import {formatDate} from "@/lib/date";
-import {Heart} from "lucide-react";
-import {Button} from "@/components/ui/button";
+import {Heart, Reply} from "lucide-react";
+import {Button, buttonVariants} from "@/components/ui/button";
 import {Card} from "@/components/ui/card";
+import * as repl from "node:repl";
 
 type OfferLayoutProps = PropsWithChildren<{
     user: OfferHome["user"],
@@ -14,12 +15,17 @@ type OfferLayoutProps = PropsWithChildren<{
     className?: string,
     offerId?: string,
     hasHeart?: boolean,
+    reply?: {
+        commentId: string,
+        offerId: string,
+    },
+    avatarSize?: "default" | "sm" | "lg",
 }>;
 
-export function OfferLayout({className, user, createdAt, children, hasHeart = true}: OfferLayoutProps) {
+export function OfferLayout({className, user, createdAt, children, hasHeart = true, reply, avatarSize = "default"}: OfferLayoutProps) {
     return (
         <Card className={clsx("flex w-full flex-row items-start p-4", className)}>
-            <Avatar size="default">
+            <Avatar size={avatarSize}>
                 {user.image ? <AvatarImage src={user.image} alt={user.name}/> : null}
                 <AvatarFallback>
                     {user.username ? user.username.slice(0, 2).toUpperCase() : user.name.slice(0, 2).toUpperCase()}
@@ -42,6 +48,14 @@ export function OfferLayout({className, user, createdAt, children, hasHeart = tr
                 <Button size="icon" variant="ghost">
                     <Heart size={20} />
                 </Button>
+            ) : null}
+            {(reply?.commentId && reply?.offerId) ? (
+                <Link href={{ pathname: `/offers/${reply.offerId}/comment`, query: { 'replyTo': reply.commentId }}} className={buttonVariants({
+                    size: "icon",
+                    variant: "ghost",
+                })}>
+                    <Reply size={20}/>
+                </Link>
             ) : null}
         </Card>
     );

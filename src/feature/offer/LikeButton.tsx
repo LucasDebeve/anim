@@ -8,10 +8,11 @@ import {likeAction} from "@/src/feature/offer/like.action";
 import {round} from "@floating-ui/utils";
 import {Button} from "@/components/ui/button";
 
-export function LikeButton({offerId, isLiked, countLike} : {
+export function LikeButton({offerId, isLiked, countLike, size = 16} : {
     offerId: string;
     isLiked: boolean;
     countLike: number;
+    size?: number;
 }) {
     const [isPending, setIsPending] = useTransition();
 
@@ -19,7 +20,7 @@ export function LikeButton({offerId, isLiked, countLike} : {
         <Button className={clsx("flex items-center justify-start gap-1 min-w-[5rem]")} variant="ghost" onClick={() => {
             startTransition(() => likeAction(offerId))
         }}>
-            {isPending ? <Loader size={16} /> : (isLiked ? <Heart size={16} fill={"#EC2756"} stroke={"#EC2756"} /> : <Heart size={16} />)}
+            {isPending ? <Loader size={size} /> : (isLiked ? <Heart size={size} fill={"#EC2756"} stroke={"#EC2756"} /> : <Heart size={size} />)}
             <span>{countLike}</span>
         </Button>
     );

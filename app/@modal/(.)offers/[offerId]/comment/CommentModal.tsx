@@ -19,6 +19,7 @@ import {round} from "@floating-ui/utils";
 import {clsx} from "clsx";
 import {OfferLayout} from "@/src/feature/offer/OfferLayout";
 import {createComment} from "@/app/offers/[offerId]/comment/create-comment.action";
+import {Avatar, AvatarFallback} from "@/components/ui/avatar";
 
 export function CreateCommentModal({user, offer, createComment}: {
     user: User,
@@ -35,7 +36,8 @@ export function CreateCommentModal({user, offer, createComment}: {
                     router.back();
                 }}>
             <DialogContent className="max-h-[100svh] overflow-y-auto">
-                <OfferLayout user={offer.user} offerId={offer.id} createdAt={offer.createdAt} hasHeart={false} className="border-none shadow-none">
+                <OfferLayout user={offer.user} offerId={offer.id} createdAt={offer.createdAt} hasHeart={false}
+                             className="border-none shadow-none">
                     <Link href={`/offers/${offer.id}`} className="text-foreground font-semibold">
                         {offer.title}
                     </Link>
@@ -43,6 +45,18 @@ export function CreateCommentModal({user, offer, createComment}: {
                         {offer.description}
                     </p>
                     <OfferDetails offer={offer}/>
+                    <div className="flex justify-center items-center gap-4 my-3">
+                        <Avatar size="default">
+                            <AvatarFallback>
+                                {offer.organization.name.slice(0, 2).toUpperCase()}
+                            </AvatarFallback>
+                        </Avatar>
+                        <div className="flex flex-col">
+                            <Link href={`/organization/${offer.organization.id}`}>
+                                <p className="font-semibold text-muted-foreground">{offer.organization.name}</p>
+                            </Link>
+                        </div>
+                    </div>
                 </OfferLayout>
                 <OfferLayout user={user} createdAt={undefined} hasHeart={false} className="border-none shadow-none">
                     <CreateCommentForm user={user} onSubmit={createComment} offer={offer}/>
