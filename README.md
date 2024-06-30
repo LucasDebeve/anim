@@ -1,5 +1,19 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## ToDo
+
+- [ ] Ajouter une image pour chaque organisation
+- [ ] Ajouter une image pour chaque offre
+- [ ] Ajouter le commentaire parent à la modal de commentaire
+- [ ] La page de liste des organisations
+- [ ] La page de détails d'une organisation
+- [ ] La création d'une organisation
+- [ ] La modification d'une organisation
+- [ ] La vérification d'une organisation par un admin
+- [X] L'authentification par Github
+- [ ] L'authentification par Google
+- [ ] L'authentification par Facebook
+
 ## Getting Started
 
 First, run the development server:
