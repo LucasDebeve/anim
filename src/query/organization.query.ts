@@ -1,5 +1,6 @@
 import {prisma} from "@/lib/prisma";
 import {Prisma} from "@prisma/client";
+import {offerSelectQuery} from "@/src/query/offer.query";
 
 const OrganizationSelect = {
     id: true,
@@ -56,6 +57,27 @@ export const getOrganizations = (page: number, pageLength: number, search: strin
         }
     })
 };
+
+export const getOrganizationView = (organizationId: string, userId?: string) => prisma.organization.findUnique({
+    where: {
+        id: organizationId,
+    },
+    select: {
+        ...OrganizationSelect,
+        offers: {
+            select: offerSelectQuery(userId),
+            orderBy: {
+                createdAt: 'desc',
+            }
+        },
+        _count: {
+            select: {
+                offers: true,
+                evaluations: true,
+            }
+        }
+    }
+});
 
 export const getOrganizationCount = () => prisma.organization.count();
 
