@@ -5,9 +5,9 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 - [x] Ajouter une image pour chaque organisation
 - [ ] Ajouter une image pour chaque offre
 - [ ] Ajouter le commentaire parent à la modal de commentaire
-- [ ] La page de liste des organisations
+- [x] La page de liste des organisations
 - [ ] La page de détails d'une organisation
-- [ ] La création d'une organisation
+- [x] La création d'une organisation
 - [ ] La modification d'une organisation
 - [ ] La vérification d'une organisation par un admin
 - [X] L'authentification par Github
