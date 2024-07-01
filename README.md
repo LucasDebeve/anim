@@ -4,7 +4,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 - [x] Ajouter une image pour chaque organisation
 - [ ] Ajouter une image pour chaque offre
-- [ ] Ajouter le commentaire parent à la modal de commentaire
+- [x] Ajouter le commentaire parent à la modal de commentaire
 - [x] La page de liste des organisations
 - [ ] La page de détails d'une organisation
 - [x] La création d'une organisation

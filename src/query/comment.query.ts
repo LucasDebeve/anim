@@ -1,4 +1,5 @@
 import {prisma} from "@/lib/prisma";
+import {Prisma} from "@prisma/client";
 
 export const getComment = (commentId: string) => prisma.comment.findUnique({
     where: {
@@ -19,3 +20,5 @@ export const getComment = (commentId: string) => prisma.comment.findUnique({
         }
     }
 });
+
+export type CommentType = Prisma.PromiseReturnType<typeof getComment>;

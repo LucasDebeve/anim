@@ -1,7 +1,7 @@
 "use client";
 
 import {usePathname, useRouter} from "next/navigation";
-import {Dialog, DialogContent} from "@/components/ui/dialog";
+import {Dialog, DialogContent, DialogHeader, DialogTitle} from "@/components/ui/dialog";
 import {CreateForm, CreateFormValues} from "@/app/offers/create/CreateForm";
 import {User} from "@prisma/client";
 import {SelectItem} from "@/components/ui/select";
@@ -23,6 +23,9 @@ export function CreateModal({user, allContracts, allTypes, allOrganizations, cre
                     router.back();
                 }}>
             <DialogContent className="max-h-[100svh] overflow-y-auto">
+                <DialogHeader>
+                    <DialogTitle>Création d&apos;une offre</DialogTitle>
+                </DialogHeader>
                 <CreateForm user={user} onSubmit={createOfferAction} allContracts={(
                     allContracts ? allContracts.map((contract: any) => (
                         <SelectItem value={contract.id} key={contract.id}>

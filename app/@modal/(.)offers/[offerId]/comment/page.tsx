@@ -3,6 +3,7 @@ import {CreateCommentModal} from "@/app/@modal/(.)offers/[offerId]/comment/Comme
 import {createComment} from "@/app/offers/[offerId]/comment/create-comment.action";
 import {getOffer} from "@/src/query/offer.query";
 import {notFound} from "next/navigation";
+import {getComment} from "@/src/query/comment.query";
 
 export default async function Page({params, searchParams} : {
     params: {
@@ -21,6 +22,7 @@ export default async function Page({params, searchParams} : {
         <CreateCommentModal
             offer={offer}
             user={user}
+            parentComment={searchParams["replyTo"] ? await getComment(searchParams["replyTo"]) : undefined}
             createComment={async (values) => {
             "use server";
 
