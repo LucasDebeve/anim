@@ -6,6 +6,7 @@ export const offerSelectQuery = (userId?: string) => ({
     title: true,
     description: true,
     remuneration: true,
+    image: true,
     age_min: true,
     age_max: true,
     beginAt: true,

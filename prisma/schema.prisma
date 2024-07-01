@@ -145,6 +145,7 @@ model Offer {
   offerTypeId           String
   beginAt               DateTime
   endAt                 DateTime
+  image                 String     @default("")
   age_min               Int
   age_max               Int
   city                  String

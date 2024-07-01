@@ -29,7 +29,7 @@ export default async function OfferView({
 
     return (
         <>
-            <img src={"https://images.unsplash.com/photo-1496718412302-96e78da39b72?q=80&w=1728&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"}
+            <img src={offer.image === "" ? "https://via.placeholder.com/600x800" : offer.image}
                  alt={offer.title}
                  className="fixed left-0 w-[50svw] top-14 h-[calc(100%-3.5rem)] object-cover"/>
             <div

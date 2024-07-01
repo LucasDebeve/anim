@@ -13,7 +13,6 @@ import {Button, buttonVariants} from "@/components/ui/button";
 import {PenBox, Search} from "lucide-react";
 import {getAuthSession} from "@/lib/auth";
 import {Input} from "@/components/ui/input";
-import {SearchBar} from "@/src/feature/organization/SearchBar";
 
 export default async function Page({searchParams} : {
     searchParams: { [key: string]: string | undefined}

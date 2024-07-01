@@ -2,7 +2,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## ToDo
 
-- [ ] Ajouter une image pour chaque organisation
+- [x] Ajouter une image pour chaque organisation
 - [ ] Ajouter une image pour chaque offre
 - [ ] Ajouter le commentaire parent à la modal de commentaire
 - [ ] La page de liste des organisations

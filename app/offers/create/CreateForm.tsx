@@ -124,7 +124,7 @@ export function CreateForm({user, onSubmit, allContracts, allTypes, allOrganizat
       }}>
           <FormField control={form.control} name="title" render={({field}) => (
               <FormItem>
-                  <FormLabel htmlFor="contract">Titre de l'offre<span className="text-red-600">*</span></FormLabel>
+                  <FormLabel htmlFor="contract">Titre de l&apos;offre<span className="text-red-600">*</span></FormLabel>
                   <Input {...field} id="title" placeholder="Titre de l'offre"/>
                   <FormMessage />
               </FormItem>
@@ -257,7 +257,7 @@ export function CreateForm({user, onSubmit, allContracts, allTypes, allOrganizat
                             </Select>
                             <FormMessage />
                             <p className="text-sm text-muted-foreground mt-1">
-                                Si l'organisme n'est pas dans la liste, veuillez le créer <Link href={`/organizations/create`} className={"underline"}>ici</Link>.
+                                Si l&apos;organisme n&apos;est pas dans la liste, veuillez le créer <Link href={`/organizations/create`} className={"underline"}>ici</Link>.
                             </p>
                       </FormItem>
                   )}

@@ -40,3 +40,6 @@ next-env.d.ts
 
 # Databse
 prisma/*.db
+
+# WebStorm
+.idea

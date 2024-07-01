@@ -23,7 +23,7 @@ export function Organization({organization, isCard} : OrganizationProps) {
     return (
         <Card className={isCard ? "" : "border-none shadow-none"}>
             <Avatar size="lg">
-                <AvatarImage src={organization.image} alt={organization.name}/>
+                <AvatarImage src={organization.image} alt={organization.name}  className="object-cover"/>
                 <AvatarFallback>{organization.name.slice(0, 2).toUpperCase()}</AvatarFallback>
             </Avatar>
             <Link href={`/organizations/${organization.id}`}
