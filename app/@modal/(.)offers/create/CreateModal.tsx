@@ -4,9 +4,6 @@ import {usePathname, useRouter} from "next/navigation";
 import {Dialog, DialogContent} from "@/components/ui/dialog";
 import {CreateForm, CreateFormValues} from "@/app/offers/create/CreateForm";
 import {User} from "@prisma/client";
-import {getAllContracts} from "@/src/query/contract.query";
-import {getAllTypes} from "@/src/query/types.query";
-import {getAllOrganizations} from "@/src/query/organization.query";
 import {SelectItem} from "@/components/ui/select";
 
 export function CreateModal({user, allContracts, allTypes, allOrganizations, createOfferAction}: {

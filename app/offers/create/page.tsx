@@ -2,7 +2,7 @@ import {getUser} from "@/src/query/user.query";
 import {CreateForm} from "@/app/offers/create/CreateForm";
 import {createOfferAction} from "@/app/offers/create/create-offer.action";
 import {getAllContracts} from "@/src/query/contract.query";
-import {getAllOrganizations} from "@/src/query/organization.query";
+import {getAllOrganizationsShort} from "@/src/query/organization.query";
 import {SelectItem} from "@/components/ui/select";
 import {getAllTypes} from "@/src/query/types.query";
 
@@ -13,7 +13,7 @@ export default async function CreateOffer() {
 
     const types = await getAllTypes();
 
-    const organizations = await getAllOrganizations();
+    const organizations = await getAllOrganizationsShort();
 
     return (
         <CreateForm user={user} onSubmit={createOfferAction} allContracts={(

@@ -125,6 +125,7 @@ model Organization {
   id                    String     @id @default(uuid())
   name                  String
   bio                   String
+  image                 String     @default("")
   userId                String
   createdAt             DateTime   @default(now())
 

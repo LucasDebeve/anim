@@ -2,23 +2,12 @@
 
 import {usePathname, useRouter} from "next/navigation";
 import {Dialog, DialogContent} from "@/components/ui/dialog";
-import {CreateForm, CreateFormValues} from "@/app/offers/create/CreateForm";
 import {User} from "@prisma/client";
-import {getAllContracts} from "@/src/query/contract.query";
-import {getAllTypes} from "@/src/query/types.query";
-import {getAllOrganizations} from "@/src/query/organization.query";
-import {SelectItem} from "@/components/ui/select";
 import {CreateCommentForm, CreateCommentFormValues} from "@/app/offers/[offerId]/comment/CreateCommentForm";
 import {OfferHome} from "@/src/query/offer.query";
-import {Offer} from "@/src/feature/offer/Offer";
 import Link from "next/link";
 import {OfferDetails} from "@/src/feature/offer/offerDetails";
-import {Button, buttonVariants} from "@/components/ui/button";
-import {Heart, MessageCircle} from "lucide-react";
-import {round} from "@floating-ui/utils";
-import {clsx} from "clsx";
 import {OfferLayout} from "@/src/feature/offer/OfferLayout";
-import {createComment} from "@/app/offers/[offerId]/comment/create-comment.action";
 import {Avatar, AvatarFallback} from "@/components/ui/avatar";
 
 export function CreateCommentModal({user, offer, createComment}: {

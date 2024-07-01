@@ -43,7 +43,7 @@ export default async function OfferView({
                             </AvatarFallback>
                         </Avatar>
                         <div className="flex flex-col">
-                            <Link href={`/organization/${offer.organization.id}`}>
+                            <Link href={`/organizations/${offer.organization.id}`}>
                                 <p className="font-semibold text-muted-foreground">{offer.organization.name}</p>
                             </Link>
                         </div>
