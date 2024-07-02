@@ -86,6 +86,7 @@ const Schema = z.object({
         required_error: "Veuillez saisir un pays",
     }).min(1),
     intern: z.boolean().default(false).optional(),
+    complete: z.boolean().default(false).optional(),
 }).superRefine((data, context) => {
     if (data.age_min > data.age_max) {
         context.addIssue({
@@ -105,9 +106,10 @@ type CreateFormProps = {
     allTypes: any;
     allOrganization: any;
     isCard?: boolean;
+    creation?: boolean;
 };
 
-export function CreateForm({user, onSubmit, allContracts, allTypes, allOrganization, isCard = false}: CreateFormProps) {
+export function CreateForm({user, onSubmit, allContracts, allTypes, allOrganization, isCard = false, creation = true}: CreateFormProps) {
     const form = useZodForm({
         schema: Schema,
     });
@@ -321,6 +323,23 @@ export function CreateForm({user, onSubmit, allContracts, allTypes, allOrganizat
                           className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                       >
                           Accepter les candidatures de stagiaires
+                      </FormLabel>
+                  </div>
+                  <FormMessage/>
+              </FormItem>
+          )}/>
+
+          <FormField control={form.control} name="complete" disabled={creation} render={({field}) => (
+              <FormItem className="mt-3">
+                  <div className="flex items-center space-x-2">
+                      <FormControl>
+                          <Checkbox id="complete" checked={field.value} disabled={creation} onCheckedChange={field.onChange}/>
+                      </FormControl>
+                      <FormLabel
+                          htmlFor="complete"
+                          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                      >
+                          Equipe complète
                       </FormLabel>
                   </div>
                   <FormMessage/>

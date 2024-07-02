@@ -23,6 +23,11 @@ export function Offer({offer, isCard = true, hasHeart = true}: OfferProps) {
             <p className="text-sm text-muted-foreground">
                 {offer.description}
             </p>
+            {offer.complete ? (
+                <div className="bg-accent text-accent-foreground text-center py-2">
+                    <p className="text-lg font-bold">Equipe complète</p>
+                </div>
+            ) : null}
             <OfferDetails offer={offer}/>
             <div className="flex gap-3">
                 <LikeButton offerId={offer.id} isLiked={offer.likes.length > 0} countLike={round(offer._count.likes)}/>

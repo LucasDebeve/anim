@@ -34,7 +34,7 @@ type OrderBy = {
 export const getOrganizations = async (page: number, pageLength: number, search: string | undefined, orderBy: OrderBy[]) => {
     const where: Prisma.OrganizationWhereInput = {};
     if (search) {
-        where['name'] = {
+        where.name = {
             contains: search,
         }
     }
@@ -77,6 +77,18 @@ export const getOrganizationView = (organizationId: string, userId?: string) => 
     }
 });
 
-export const getOrganizationCount = () => prisma.organization.count();
+export const getOrganizationCount = (search?: string) => {
+    const where: Prisma.OrganizationWhereInput = {};
+
+    if (search) {
+        where.name = {
+            contains: search,
+        }
+    }
+
+    return prisma.organization.count({
+        where,
+    })
+};
 
 export type OrganizationHome = Prisma.PromiseReturnType<typeof getOrganizations>[number];

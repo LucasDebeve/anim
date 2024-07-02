@@ -5,7 +5,7 @@ export function OfferDetails({offer}: { offer: OfferHome }) {
         <>
             <hr className="mt-2"/>
             <div className="py-2 flex flex-row gap-2 justify-between">
-                <div className="text-sm md:text-base">
+                <div className="text-sm">
                     <p className="font-semibold">
                         Type
                     </p>
@@ -13,15 +13,23 @@ export function OfferDetails({offer}: { offer: OfferHome }) {
                         {offer.offerType.title}
                     </p>
                 </div>
-                <div className="text-sm md:text-base">
+                <div className="text-sm">
                     <p className="font-semibold">
-                        Tranche d'âge
+                        Dates
+                    </p>
+                    <p>
+                        {offer.beginAt.toLocaleDateString()} - {offer.endAt.toLocaleDateString()}
+                    </p>
+                </div>
+                <div className="text-sm">
+                    <p className="font-semibold">
+                        Tranche d&apos;âge
                     </p>
                     <p>
                         {offer.age_min} - {offer.age_max} ans
                     </p>
                 </div>
-                <div className="text-sm md:text-base">
+                <div className="text-sm">
                     <p className="font-semibold">
                         Contrat
                     </p>
@@ -29,7 +37,7 @@ export function OfferDetails({offer}: { offer: OfferHome }) {
                         {offer.contract.title}
                     </p>
                 </div>
-                <div className="text-sm md:text-base">
+                <div className="text-sm">
                     <p className="font-semibold">
                         Rémunération
                     </p>
@@ -38,7 +46,7 @@ export function OfferDetails({offer}: { offer: OfferHome }) {
                     </p>
                 </div>
             </div>
-        <hr className="mb-2"/>
+            <hr className="mb-2"/>
         </>
     );
 }

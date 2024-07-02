@@ -14,9 +14,9 @@ export const Header = async () => {
             <div className="container flex items-center py-2 m-auto gap-1">
                 <Link href="/" className="text-2xl font-bold pr-8">Anim</Link>
                 <nav className="flex gap-4 mr-auto">
-                    <Link href="/" className={buttonVariants({
+                    <Link href="/offers" className={buttonVariants({
                         variant: "ghost",
-                    })}>Offres d'emploi</Link>
+                    })}>Offres d&apos;emploi</Link>
                     <Link href="/organizations" className={buttonVariants({
                         variant: "ghost",
                     })}>Organisme</Link>

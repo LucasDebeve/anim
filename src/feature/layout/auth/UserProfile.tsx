@@ -12,25 +12,25 @@ export async function UserProfile() {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <Avatar>
+                <Avatar size="default">
                     <AvatarImage src={session?.user?.image ?? ""} alt={session?.user?.name ?? ""} />
                     <AvatarFallback>{session?.user?.name?.charAt(0)}</AvatarFallback>
                 </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-                <DropdownMenuItem asChild>
+                <DropdownMenuItem asChild className="hover:cursor-pointer">
                     <Link href="/profile">
                         <User2 className="mr-2 h-4 w-4" />
                         Profile
                     </Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem asChild>
+                <DropdownMenuItem asChild className="hover:cursor-pointer">
                     <Link href="/settings">
                         <Settings2 className="mr-2 h-4 w-4" />
                         Paramètres
                     </Link>
                 </DropdownMenuItem>
-                <DropdownMenuItemLogout />
+                <DropdownMenuItemLogout/>
             </DropdownMenuContent>
         </DropdownMenu>
     );

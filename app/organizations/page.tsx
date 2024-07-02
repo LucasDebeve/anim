@@ -13,6 +13,7 @@ import {Button, buttonVariants} from "@/components/ui/button";
 import {PenBox, Search} from "lucide-react";
 import {getAuthSession} from "@/lib/auth";
 import {Input} from "@/components/ui/input";
+import {SearchInput} from "@/src/feature/SearchInput";
 
 export default async function Page({searchParams} : {
     searchParams: { [key: string]: string | undefined}
@@ -29,9 +30,9 @@ export default async function Page({searchParams} : {
         throw new Error("Invalid page number");
     }
 
-    const organizations = await getOrganizations(page, pageLength, search, [{name: 'asc'}]);
+    const organizations = await getOrganizations(page, pageLength, search?.trim(), [{name: 'asc'}]);
 
-    const organizationCount = await getOrganizationCount();
+    const organizationCount = await getOrganizationCount(search?.trim());
 
     // Vérifier si la page demandée est valide
     if (organizationCount - (pageLength * (page - 1)) < 0) {
@@ -52,18 +53,7 @@ export default async function Page({searchParams} : {
                     </Link>
                 ) : null}
             </div>
-            <form method="GET" className="pb-5 flex items-start">
-                <Input
-                    type="search"
-                    placeholder="Rechercher un organisme"
-                    name="search"
-                    defaultValue={search}
-                    className="w-full rounded-r-none"/>
-                <Button type="submit" className="rounded-l-none">
-                    <Search size={20}/>
-                    <span className="sr-only">Rechercher</span>
-                </Button>
-            </form>
+            <SearchInput defaultValue={search} nbResults={organizationCount}/>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                 {organizations.map((organization: any) => (
                     <Organization organization={organization} isCard={false} key={organization.id}/>

@@ -12,6 +12,7 @@ export const offerSelectQuery = (userId?: string) => ({
     beginAt: true,
     endAt: true,
     city: true,
+    complete: true,
     postal_code: true,
     country: true,
     interAccepted: true,
@@ -68,33 +69,64 @@ export const getLatestOffers = (userId?:string) => prisma.offer.findMany({
     orderBy: {
         createdAt: 'desc',
     },
+    where: {
+        endAt: {
+            gte: new Date(),
+        },
+        complete: false,
+    },
     select: offerSelectQuery(userId),
 });
 
-export const getOfferView = (offerId: string, userId?: string) => prisma.offer.findUnique({
-    where: {
-        id: offerId,
-    },
-    select: {
-        ...offerSelectQuery(userId),
-        comments: {
-            select: {
-                id: true,
-                content: true,
-                createdAt: true,
-                parent: true,
-                user: {
-                    select: {
-                        id: true,
-                        name: true,
-                        username: true,
-                        image: true,
+export const getAllOffers = (page: number, pageLength: number, userId?:string, search?: string,) => {
+    const where: Prisma.OfferWhereInput = {};
+
+    if (search) {
+        where.OR = [
+            {title: {contains: search}},
+            {description: {contains: search}},
+            {city: {contains: search}},
+            {country: {contains: search}},
+        ];
+    }
+
+    return prisma.offer.findMany({
+        take: pageLength,
+        skip: (page - 1) * pageLength,
+        orderBy: {
+            createdAt: 'desc',
+        },
+        where,
+        select: offerSelectQuery(userId),
+    })
+};
+
+export const getOfferView = async (offerId: string, userId?: string) => {
+    return prisma.offer.findUnique({
+        where: {
+            id: offerId,
+        },
+        select: {
+            ...offerSelectQuery(userId),
+            comments: {
+                select: {
+                    id: true,
+                    content: true,
+                    createdAt: true,
+                    parent: true,
+                    user: {
+                        select: {
+                            id: true,
+                            name: true,
+                            username: true,
+                            image: true,
+                        }
                     }
                 }
             }
         }
-    }
-});
+    })
+};
 
 export const getOffer = (offerId: string, userId?: string) => prisma.offer.findUnique({
     where: {
@@ -104,5 +136,22 @@ export const getOffer = (offerId: string, userId?: string) => prisma.offer.findU
         ...offerSelectQuery(userId),
     }
 });
+
+export const getOfferCount = (search?: string) => {
+    const where: Prisma.OfferWhereInput = {};
+
+    if (search) {
+        where.OR = [
+            {title: {contains: search}},
+            {description: {contains: search}},
+            {city: {contains: search}},
+            {country: {contains: search}},
+        ];
+    }
+
+    return prisma.offer.count({
+        where,
+    })
+};
 
 export type OfferHome = Prisma.PromiseReturnType<typeof getLatestOffers>[number];

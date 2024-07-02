@@ -34,6 +34,11 @@ export default async function OfferView({
                  className="fixed left-0 w-[50svw] top-14 h-[calc(100%-3.5rem)] object-cover"/>
             <div
                 className="fixed left-[50svw] w-[50svw] top-14 h-[calc(100%-3.5rem)] flex flex-col overflow-y-auto py-6 px-12 bg-background z-20">
+                {offer.complete ? (
+                    <div className="bg-accent text-accent-foreground text-center mb-3 py-2">
+                        <p className="text-xl font-bold">Equipe complète</p>
+                    </div>
+                ) : null}
                 <h1 className="text-2xl font-bold">{offer.title}</h1>
                 <div className="flex gap-5 justify-between">
                     <div className="flex gap-4 my-3">

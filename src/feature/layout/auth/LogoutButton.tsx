@@ -10,7 +10,7 @@ export function DropdownMenuItemLogout() {
     const [isPending, startTransition] = useTransition()
 
     return (
-        <DropdownMenuItem onClick={() => {
+        <DropdownMenuItem className="hover:cursor-pointer" onClick={() => {
             startTransition(() => signOut());
         }}>
             {isPending ?

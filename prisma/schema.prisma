@@ -152,6 +152,7 @@ model Offer {
   postal_code           String
   country               String
   interAccepted         Boolean
+  complete              Boolean    @default(false)
   createdAt             DateTime   @default(now())
 
   user User @relation("publish", fields: [userId], references: [id])

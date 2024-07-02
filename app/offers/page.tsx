@@ -1,17 +1,26 @@
 import {getAuthSession} from "@/lib/auth";
-import {prisma} from "@/lib/prisma";
-import {Card} from "@/components/ui/card";
-import {getLatestOffers} from "@/src/query/offer.query";
+import {getAllOffers, getOfferCount} from "@/src/query/offer.query";
 import {Offer} from "@/src/feature/offer/Offer";
 import Link from "next/link";
 import {PenBox} from "lucide-react";
 import {buttonVariants} from "@/components/ui/button";
-import {clsx} from "clsx";
+import {SearchInput} from "@/src/feature/SearchInput";
 
-export default async function Home() {
+
+export default async function Home({searchParams} : {
+    searchParams: { [key: string]: string | undefined}
+}) {
     const session = await getAuthSession();
 
-    const offers = await getLatestOffers(session?.user.id);
+    const pageLength = 6;
+
+    const page = parseInt(searchParams['page'] || "1");
+
+    const search = searchParams['search'];
+
+    const offers = await getAllOffers(page, pageLength, session?.user.id, search?.trim());
+
+    const offersCount = await getOfferCount(search?.trim());
 
     return (
         <>
@@ -25,6 +34,7 @@ export default async function Home() {
                     </Link>
                 ) : null}
             </div>
+            <SearchInput defaultValue={search} nbResults={offersCount}/>
             <div className="flex flex-col gap-3">
                 {offers.map((offer, index) => {
                    return (

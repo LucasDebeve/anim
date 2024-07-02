@@ -28,6 +28,8 @@ export const getUser = async () => {
 };
 
 export const GetUserProfile = async (userId: string, connectedUserId?: string) => {
+    await new Promise((resolve) => {setTimeout(resolve, 1000)});
+
     return prisma.user.findFirst({
         where: {
             OR: [

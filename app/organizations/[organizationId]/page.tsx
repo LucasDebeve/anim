@@ -2,6 +2,7 @@ import {getAuthSession} from "@/lib/auth";
 import {getOrganizationView} from "@/src/query/organization.query";
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 import Link from "next/link";
+import {notFound} from "next/navigation";
 
 export default async function Page({params}: {
     params: {
@@ -11,6 +12,11 @@ export default async function Page({params}: {
     const session = await getAuthSession()
 
     const organization = await getOrganizationView(params.organizationId, session?.user.id);
+
+    if (!organization) {
+        return notFound();
+    }
+
     return (
         <div className="flex flex-col justify-center">
             <h1 className="text-3xl font-bold text-center">{organization.name}</h1>
