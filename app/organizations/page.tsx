@@ -38,6 +38,7 @@ export default async function Page({searchParams} : {
         redirect("/organizations")
     }
 
+    console.log(organizationCount, pageLength, page + 1, Math.ceil(organizationCount / pageLength));
 
     return (
         <>
@@ -99,7 +100,7 @@ export default async function Page({searchParams} : {
                     ) : null}
                     <PaginationItem>
                         <PaginationNext href={`/organizations?page=${page + 1}`}
-                                        className={organizationCount - (pageLength * (page)) < 0 ? "pointer-events-none opacity-50" : ""}/>
+                                        className={page + 1 > Math.ceil(organizationCount / pageLength) ? "pointer-events-none opacity-50" : ""}/>
                     </PaginationItem>
                 </PaginationContent>
             </Pagination>

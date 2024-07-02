@@ -31,15 +31,13 @@ type OrderBy = {
     [key: string]: 'asc' | 'desc';
 }
 
-export const getOrganizations = (page: number, pageLength: number, search: string | undefined, orderBy: OrderBy[]) => {
+export const getOrganizations = async (page: number, pageLength: number, search: string | undefined, orderBy: OrderBy[]) => {
     const where: Prisma.OrganizationWhereInput = {};
     if (search) {
         where['name'] = {
             contains: search,
         }
     }
-
-    console.log(where);
 
     return prisma.organization.findMany({
         skip: (page - 1) * pageLength,
